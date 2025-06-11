@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kochapp-v3';
+const CACHE_NAME = 'kochapp-v3-0-1';
 const FILES_TO_CACHE = [
   '/',
   '/index.html',
