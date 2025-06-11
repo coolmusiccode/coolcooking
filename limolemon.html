@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zitronenmelisse-Limonade</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+    body {
+      margin: 0; padding: 2rem;
+      font-family: 'Inter', sans-serif;
+      background: #121212;
+      color: #eee;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .card {
+      background: #1f1f1f;
+      border-radius: 16px;
+      box-shadow: 0 0 15px #ffcb52aa;
+      padding: 1.5rem 2rem;
+      max-width: 320px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    h1 {
+      color: #ffcb52;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      font-size: 1.8rem;
+    }
+    h2 {
+      color: #ffe28a;
+      margin-bottom: 1rem;
+    }
+    ul {
+      padding-left: 1.2rem;
+      margin: 0 0 1rem 0;
+      font-size: 1rem;
+      flex-grow: 1;
+    }
+    ul li {
+      margin-bottom: 0.5rem;
+    }
+    .download-btn {
+      background: #ffcb52;
+      border: none;
+      color: #000;
+      padding: 0.7rem 0;
+      font-size: 1.1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s ease;
+      user-select: none;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .download-btn:hover {
+      background: #e0b543;
+    }
+    .steps-card {
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      background: #1f1f1f;
+      border-radius: 16px;
+      box-shadow: 0 0 15px #ffcb52aa;
+      padding: 2rem;
+      flex: 1;
+    }
+    .step {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      margin-bottom: 1.5rem;
+    }
+    .step.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .step h3 {
+      margin: 0 0 0.5rem 0;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: #ffe28a;
+    }
+    .step p {
+      margin: 0 0 1rem 0;
+      font-size: 1.1rem;
+    }
+    .step img {
+      max-width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 0 12px #ffcb52aa;
+      user-select: none;
+      pointer-events: none;
+      margin-top: 0.5rem;
+    }
+    .controls {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    button {
+      flex: 1;
+      background: #ffcb52;
+      border: none;
+      color: #000;
+      padding: 0.7rem 0;
+      font-size: 1.1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s ease;
+      user-select: none;
+    }
+    button:disabled {
+      background: #666;
+      cursor: not-allowed;
+    }
+    button:hover:not(:disabled) {
+      background: #e0b543;
+    }
+    .back-button {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      background: #333;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      font-weight: bold;
+      text-decoration: none;
+      z-index: 100;
+      transition: background 0.3s;
+    }
+    .back-button:hover {
+      background: #444;
+    }
+    @media (max-width: 780px) {
+      body {
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem;
+        gap: 1.5rem;
+      }
+      .card, .steps-card {
+        max-width: 100%;
+        width: 100%;
+      }
+      .back-button {
+        position: static;
+        margin-bottom: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="index.html" class="back-button">← Zurück</a>
+
+  <section class="card" aria-label="Zutatenliste">
+    <h1>Zitronenmelisse-Limonade</h1>
+    <h2>Zutaten (für ca. 1 Liter)</h2>
+    <ul id="ingredientsList"></ul>
+    <!-- PDF Download Button -->
+    <a href="/pdfs/ZitronenmelisseLimo.pdf" class="download-btn" download="Zitronenmelisse-Limonade.pdf" aria-label="PDF der Zitronenmelisse-Limonade herunterladen">
+      PDF herunterladen
+    </a>
+  </section>
+
+  <section class="steps-card" aria-label="Zubereitungsschritte"></section>
+
+  <script>
+    const ingredients = [
+      "1 Liter kaltes Mineralwasser (mit oder ohne Kohlensäure)",
+      "Saft von 2 Zitronen",
+      "2–3 EL Honig oder Zucker (nach Geschmack)",
+      "1 große Handvoll frische Zitronenmelisse",
+      "Optional: ein paar Scheiben Zitrone oder Limette",
+      "Eiswürfel"
+    ];
+
+    const steps = [
+      {
+        title: "Schritt 1",
+        text: "Zitronenmelisse waschen und Blätter leicht andrücken, um das Aroma freizusetzen.",
+        img: ""
+      },
+      {
+        title: "Schritt 2",
+        text: "In einem Krug Zitronensaft und Honig/Zucker verrühren, bis sich der Zucker auflöst.",
+        img: ""
+      },
+      {
+        title: "Schritt 3",
+        text: "Zitronenmelisse und ggf. Zitronenscheiben hinzufügen.",
+        img: ""
+      },
+      {
+        title: "Schritt 4",
+        text: "Mit Mineralwasser auffüllen und Eiswürfel dazugeben.",
+        img: ""
+      },
+      {
+        title: "Schritt 5",
+        text: "Mindestens 10 Minuten ziehen lassen – eiskalt genießen!",
+        img: ""
+      },
+      {
+        title: "Tipp",
+        text: "Verfeinere deine Limo mit Holunderblütensirup oder frischer Minze.",
+        img: ""
+      }
+    ];
+
+    const ingredientsList = document.getElementById('ingredientsList');
+    const stepsCard = document.querySelector('.steps-card');
+
+    ingredients.forEach(item => {
+      const li = document.createElement('li');
+      li.textContent = item;
+      ingredientsList.appendChild(li);
+    });
+
+    let currentStep = 0;
+
+    function renderStep(index) {
+      const oldStep = document.querySelector('.step');
+      if (oldStep) {
+        oldStep.classList.remove('visible');
+        setTimeout(() => {
+          buildStep(index);
+        }, 300);
+      } else {
+        buildStep(index);
+      }
+    }
+
+    function buildStep(index) {
+      stepsCard.innerHTML = '';
+      const step = steps[index];
+
+      const stepDiv = document.createElement('div');
+      stepDiv.classList.add('step');
+      stepDiv.innerHTML = `
+        <h3>${step.title}</h3>
+        <p>${step.text}</p>
+        ${step.img ? `<img src="${step.img}" alt="${step.title}" loading="lazy">` : ''}
+      `;
+
+      const controls = document.createElement('div');
+      controls.className = 'controls';
+
+      const prevBtn = document.createElement('button');
+      prevBtn.textContent = 'Zurück';
+      prevBtn.addEventListener('click', () => {
+        if (currentStep === 0) {
+          window.location.href = 'index.html';
+        } else {
+          currentStep--;
+          renderStep(currentStep);
+        }
+      });
+
+      const nextBtn = document.createElement('button');
+      nextBtn.textContent = index === steps.length - 1 ? 'Fertig' : 'Weiter';
+      nextBtn.addEventListener('click', () => {
+        if (currentStep < steps.length - 1) {
+          currentStep++;
+          renderStep(currentStep);
+        } else {
+          window.location.href = 'index.html';
+        }
+      });
+
+      controls.appendChild(prevBtn);
+      controls.appendChild(nextBtn);
+      stepsCard.appendChild(stepDiv);
+      stepsCard.appendChild(controls);
+
+      requestAnimationFrame(() => {
+        stepDiv.classList.add('visible');
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderStep(currentStep);
+    });
+  </script>
+
+</body>
+</html>
