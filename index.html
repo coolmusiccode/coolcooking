@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cool Cooking – Start</title>
+  <meta name="theme-color" content="#121212" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icons/icon-192.png" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: #121212 url('/icons/lemonade-8163072_1280.jpg') no-repeat center/cover;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
+    .card {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 2rem;
+      border-radius: 16px;
+      max-width: 500px;
+      width: 100%;
+      animation: fadeIn 0.6s ease-out forwards;
+      opacity: 0;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    h1 { text-align: center; margin-bottom: 1rem; }
+    ul { list-style: none; padding: 0; }
+    li {
+      background: #1e1e1e;
+      margin: 0.5rem 0;
+      padding: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    li:hover {
+      background: #333;
+    }
+    footer {
+      margin-top: auto;
+      font-size: 0.9rem;
+      color: #aaa;
+      padding-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Cool Cooking</h1>
+    <p>Wähle ein Rezept:</p>
+    <ul id="recipes">
+      <li data-url="limolemon.html">Zitronenmelissen-Limonade</li>
+    </ul>
+  </div>
+
+  <footer>© 2025 KochApp</footer>
+
+  <script>
+    document.getElementById('recipes').addEventListener('click', e => {
+      if (e.target.dataset.url) {
+        window.location.href = e.target.dataset.url;
+      }
+    });
+
+    // PWA/Service Worker Registrierung
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(reg => console.log('Service Worker registriert:', reg.scope))
+          .catch(err => console.error('SW Fehler:', err));
+      });
+    }
+  </script>
+</body>
+</html>
