@@ -1,8 +1,12 @@
-const CACHE_NAME = 'kochapp-v3-0-1';
+const CACHE_NAME = 'kochapp-v3-0-2';
 const FILES_TO_CACHE = [
   '/',
   '/index.html',
   '/pdfs/ZitronenmelisseLimo.pdf',
+  '/pdfs/ErdbeerLimoLemon.pdf',
+  '/arisdunkinicedcoffee.html',
+  '/pdfs/ArisDunkinIcedCoffee.pdf',
+  '/photos/arisdunkinicedcoffee.jpg',
   '/limolemon.html',
   '/limostrawberry.html',
   '/manifest.json',
