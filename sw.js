@@ -12,7 +12,8 @@ const FILES_TO_CACHE = [
   '/manifest.json',
   '/icons/lemonade-8163072_1280.jpg',
   '/icons/icon-192.png',
-  '/icons/icon-512.png'
+  '/icons/icon-512.png',
+  '/404.html'
 ];
 
 // Installieren: Alle Dateien zwischenspeichern
